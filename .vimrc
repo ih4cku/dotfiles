@@ -1,9 +1,11 @@
-filetype off " required by Vundle
+" vi related
+set nobackup
+set nocompatible
 
+" Vundle
+filetype off " required by Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
-" let Vundle manage Vundle
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'ZoomWin'
@@ -12,13 +14,27 @@ Plugin 'ctrlp.vim'
 Plugin 'tComment'
 Plugin 'vim-airline/vim-airline'
 Plugin 'fugitive.vim'
-Plugin 'valloric/youcompleteme'
-
+"Plugin 'valloric/youcompleteme'
+Plugin 'bling/vim-bufferline'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'altercation/vim-colors-solarized'
 call vundle#end()
 
-" vi related
-set nocompatible
-set nobackup
+" show cmd in normal mode
+set showcmd
+
+" system clipboard
+set clipboard=unnamed
+
+" change leader
+let mapleader=","
+nnoremap <leader>. :CtrlPTag<CR>
+
+" clear search highlight
+nnoremap <leader><space> :noh<CR>
+
+" regen tags
+nnoremap <leader>t :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q<CR><CR>
 
 " smart search
 set hlsearch
@@ -26,10 +42,20 @@ set incsearch
 set ignorecase
 set smartcase
 
+" highlight
+set cursorline
+
+" ex command menu
+set wildmenu
+
 " synatx 
 syntax on
 set smartindent
 set autoindent
+
+" color scheme
+set background=dark
+colorscheme solarized
 
 " match bracket
 set showmatch
@@ -68,8 +94,8 @@ nnoremap <F3> :NERDTreeToggle<CR>
 set laststatus=2
 set t_Co=256
 
-map <F5> :call CompileRunGcc()<CR>
-func! CompileRunGcc()
+noremap <F5> :call CompileRun()<CR>
+function! CompileRun()
   exec "w"
   if &filetype == 'c'
     exec "!gcc % -o %<"
@@ -87,4 +113,22 @@ func! CompileRunGcc()
   endif
 endfunc
 
+" auto save when make
+set autowrite
 
+" auto source vimrc 
+augroup reload_vimrc " {
+    au!
+    au BufWritePost ~/.vimrc source ~/.vimrc
+augroup END " }
+
+" ctrlp tag mode 
+let g:ctrlp_extensions = ['tag']
+
+" multiple cursors option
+let g:multi_cursor_exit_from_insert_mode = 0
+
+" set protobuf syntax
+augroup filetype
+    au! BufRead,BufNewFile *.proto* setfiletype proto
+augroup end

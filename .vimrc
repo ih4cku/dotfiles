@@ -34,13 +34,10 @@ Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'sickill/vim-monokai'
 
+Plugin 'vim-scripts/visual-increment'
 Plugin 'tpope/vim-surround'
 
 call vundle#end()
-
-" set folding
-set foldmethod=syntax
-set foldlevel=3
 
 " enable project specific config
 set exrc
@@ -49,7 +46,7 @@ set exrc
 set nowrap
 
 " show cmd in normal mode
-" set showcmd
+set showcmd
 
 " system clipboard
 set clipboard=unnamed
@@ -64,7 +61,7 @@ nnoremap <leader>. :CtrlPTag<CR>
 nnoremap <leader><space> :noh<CR>
 
 " regen tags
-nnoremap <leader>t :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q<CR><CR>
+nnoremap <leader>t :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=distribute/*<CR><CR>
 
 " next buffer
 nnoremap <leader>n :bn!<CR>
@@ -73,7 +70,6 @@ nnoremap <leader>d :Bdelete<CR>
 
 " save
 nnoremap <C-S> :w<CR>
-inoremap <C-S> <ESC>:w<CR>a
 
 " smart search
 set hlsearch
@@ -89,7 +85,7 @@ set wildmenu
 
 " synatx 
 syntax enable
-set smartindent
+set nosmartindent
 set autoindent
 
 " color scheme
@@ -134,17 +130,15 @@ nnoremap <F3> :NERDTreeToggle<CR>
 
 " airline
 set laststatus=2
-" set t_Co=256
+set t_Co=256
 
 noremap <F5> :call CompileRun()<CR>
 function! CompileRun()
   exec "w"
   if &filetype == 'c'
-    exec "!rm ./%<"
     exec "!gcc % -o %<"
     exec "! ./%<"
   elseif &filetype == 'cpp'
-    exec "!rm ./%<"
     exec "!g++ % -o %<"
     exec "! ./%<"
   elseif &filetype == 'java'
@@ -169,7 +163,6 @@ augroup END " }
 
 " ctrlp tag mode 
 let g:ctrlp_extensions = ['tag']
-" set wildignore+=distribute/*
 
 " multiple cursors option
 let g:multi_cursor_exit_from_insert_mode = 0
@@ -181,10 +174,12 @@ augroup end
 
 " YCM
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+set completeopt-=preview
 let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_confirm_extra_conf = 0
+nnoremap <leader>j :YcmCompleter GoToDefinition<CR>
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<C-E>"
@@ -193,4 +188,5 @@ let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 
 " solarized
 let g:solarized_termcolors=256
+
 

@@ -69,7 +69,7 @@ nnoremap <leader>p :bp!<CR>
 nnoremap <leader>d :Bdelete<CR>
 
 " save
-nnoremap <C-S> :w<CR>
+nnoremap <leader>s :w<CR>
 
 " smart search
 set hlsearch
@@ -90,7 +90,11 @@ set autoindent
 
 " color scheme
 set background=dark
-colorscheme solarized
+if has('gui_running')
+    colorscheme solarized
+else
+    colorscheme monokai
+endif
 
 " match bracket
 set showmatch

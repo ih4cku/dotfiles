@@ -1,5 +1,8 @@
+:cd %:p:h
+
 " hide gui menu
 set guioptions-=T
+set guioptions-=a
 
 " vi related
 set nobackup
@@ -15,6 +18,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'ZoomWin'
 Plugin 'majutsushi/tagbar'
+Plugin 'BufOnly.vim'
 
 Plugin 'kien/ctrlp.vim'
 Plugin 'tomtom/tcomment_vim'
@@ -63,11 +67,13 @@ nnoremap <leader><space> :noh<CR>
 " regen tags
 nnoremap <leader>t :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q --exclude=distribute/*<CR><CR>
 
-" next buffer
+" buffer
 nnoremap <leader>n :bn!<CR>
 nnoremap <leader>p :bp!<CR>
 nnoremap <leader>d :Bdelete<CR>
 
+" change working dir 
+nnoremap <leader>c :cd %:p:h<CR>
 " save
 nnoremap <leader>s :w<CR>
 

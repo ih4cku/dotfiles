@@ -199,4 +199,6 @@ let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 " solarized
 let g:solarized_termcolors=256
 
+" solve ESC delay
+set timeoutlen=1000 ttimeoutlen=0
 

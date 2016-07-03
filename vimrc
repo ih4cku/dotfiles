@@ -29,6 +29,7 @@ filetype plugin indent on
 syntax enable
 set hlsearch
 set cursorline
+set background=dark
 " }}}
 
 " gui and mouse {{{
@@ -108,11 +109,14 @@ Plugin 'rking/ag.vim'
 " tags
 Plugin 'majutsushi/tagbar'
 
+" completion
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
 " coding
 Plugin 'xuhdev/SingleCompile'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'SirVer/ultisnips'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'jiangmiao/auto-pairs'
@@ -160,17 +164,17 @@ nnoremap <F7> :SCCompile<CR>
 nnoremap <F5> :SCCompileRun<CR>
 
 " YCM
-let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
-set completeopt-=preview
-let g:ycm_preview_to_completeopt=0
-let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_confirm_extra_conf=0
-nnoremap <leader>j :YcmCompleter GoToDefinition<CR>
+" let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
+" set completeopt-=preview
+" let g:ycm_preview_to_completeopt=0
+" let g:ycm_autoclose_preview_window_after_completion=1
+" let g:ycm_confirm_extra_conf=0
+" nnoremap <leader>j :YcmCompleter GoToDefinition<CR>
 
 " UltiSnips
-let g:UltiSnipsExpandTrigger="<C-E>"
-let g:UltiSnipsJumpForwardTrigger="<C-J>"
-let g:UltiSnipsJumpBackwardTrigger="<C-K>"
+let g:UltiSnipsExpandTrigger="<c-e>"
+" let g:UltiSnipsJumpForwardTrigger="<C-J>"
+" let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 
 " vimtex
 nnoremap <localleader>lb :VimtexCompile<CR>
@@ -185,6 +189,20 @@ elseif has("unix")
     let g:vimtex_view_general_options='--unique @pdf\#src:@tex:@line:@col'
     let g:vimtex_view_general_options_latexmk='--unique'
 endif
+
+if !exists('g:ycm_semantic_triggers')
+    let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = [
+    \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
+    \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
+    \ 're!\\hyperref\[[^]]*',
+    \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
+    \ 're!\\(include(only)?|input){[^}]*',
+    \ 're!\\\a*(gls|Gls|GLS)(pl)?\a*(\s*\[[^]]*\]){0,2}\s*\{[^}]*',
+    \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
+    \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
+    \ ]
 " }}}
 
 " other functions {{{ 

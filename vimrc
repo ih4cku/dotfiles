@@ -22,6 +22,8 @@ set foldenable
 set foldmethod=marker
 set lazyredraw
 set nowrap
+highlight ColorColumn ctermbg=gray
+set colorcolumn=81
 " }}}
 
 " syntax, highlighting and spelling {{{
@@ -29,10 +31,13 @@ filetype plugin indent on
 syntax enable
 set hlsearch
 set cursorline
+set background=dark
 " }}}
 
 " gui and mouse {{{
-set guifont=Consolas:h10
+if has('win32')
+    set guifont=Consolas:h10
+endif
 set mouse=a
 set guioptions-=T
 set guioptions-=m
@@ -78,6 +83,9 @@ nnoremap E $
 " save file
 nnoremap <leader>s :w<CR> 
 
+" format paragraph
+nnoremap <leader>f :normal gwip<CR>
+
 " toggle folding
 nnoremap <space> za
 
@@ -92,6 +100,8 @@ nnoremap <leader>n :bn!<CR>
 nnoremap <leader>p :bp!<CR>
 nnoremap <leader>d :Bdelete<CR>
 
+" Ag
+nnoremap <leader>a :Ag!
 " }}}
 
 " plugins {{{
@@ -108,11 +118,14 @@ Plugin 'rking/ag.vim'
 " tags
 Plugin 'majutsushi/tagbar'
 
+" completion
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
 " coding
 Plugin 'xuhdev/SingleCompile'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'SirVer/ultisnips'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'jiangmiao/auto-pairs'
@@ -160,20 +173,20 @@ nnoremap <F7> :SCCompile<CR>
 nnoremap <F5> :SCCompileRun<CR>
 
 " YCM
-let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
-set completeopt-=preview
-let g:ycm_preview_to_completeopt=0
-let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_confirm_extra_conf=0
-nnoremap <leader>j :YcmCompleter GoToDefinition<CR>
+" let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
+" set completeopt-=preview
+" let g:ycm_preview_to_completeopt=0
+" let g:ycm_autoclose_preview_window_after_completion=1
+" let g:ycm_confirm_extra_conf=0
+" nnoremap <leader>j :YcmCompleter GoToDefinition<CR>
 
 " UltiSnips
-let g:UltiSnipsExpandTrigger="<C-E>"
-let g:UltiSnipsJumpForwardTrigger="<C-J>"
-let g:UltiSnipsJumpBackwardTrigger="<C-K>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " vimtex
-nnoremap <localleader>lb :VimtexCompile<CR>
+nnoremap <localleader>lb :VimtexCompile<CR>:VimtexView<CR>
 let g:vimtex_latexmk_continuous=0
 let g:vimtex_latexmk_options='-xelatex -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
 if has("win32")
@@ -185,6 +198,21 @@ elseif has("unix")
     let g:vimtex_view_general_options='--unique @pdf\#src:@tex:@line:@col'
     let g:vimtex_view_general_options_latexmk='--unique'
 endif
+
+if !exists('g:ycm_semantic_triggers')
+    let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = [
+    \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
+    \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
+    \ 're!\\hyperref\[[^]]*',
+    \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
+    \ 're!\\(include(only)?|input){[^}]*',
+    \ 're!\\\a*(gls|Gls|GLS)(pl)?\a*(\s*\[[^]]*\]){0,2}\s*\{[^}]*',
+    \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
+    \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
+    \ ]
+
 " }}}
 
 " other functions {{{ 
@@ -193,10 +221,13 @@ endif
 set timeoutlen=1000 ttimeoutlen=0
 
 " auto source vimrc
-augroup reload_vimrc " {
+augroup ReloadVimrc " {
     au!
     au BufWritePost ~/.vimrc source ~/.vimrc
     au BufWritePost .vimrc source .vimrc
 augroup END " }
+
+" hard text wrap in Tex
+au FileType tex :setlocal formatoptions+=amB
 
 " }}}

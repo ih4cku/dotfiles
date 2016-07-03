@@ -176,10 +176,15 @@ let g:UltiSnipsJumpBackwardTrigger="<C-K>"
 nnoremap <localleader>lb :VimtexCompile<CR>
 let g:vimtex_latexmk_continuous=0
 let g:vimtex_latexmk_options='-xelatex -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
-let g:vimtex_view_general_viewer='SumatraPDF'
-let g:vimtex_view_general_options='-reuse-instance -forward-search @tex @line @pdf'
-let g:vimtex_view_general_options_latexmk='-reuse-instance'
-
+if has("win32")
+    let g:vimtex_view_general_viewer='SumatraPDF'
+    let g:vimtex_view_general_options='-reuse-instance -forward-search @tex @line @pdf'
+    let g:vimtex_view_general_options_latexmk='-reuse-instance'
+elseif has("unix")
+    let g:vimtex_view_general_viewer='qpdfview'
+    let g:vimtex_view_general_options='--unique @pdf\#src:@tex:@line:@col'
+    let g:vimtex_view_general_options_latexmk='--unique'
+endif
 " }}}
 
 " other functions {{{ 

@@ -173,12 +173,12 @@ nnoremap <F7> :SCCompile<CR>
 nnoremap <F5> :SCCompileRun<CR>
 
 " YCM
-" let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
-" set completeopt-=preview
-" let g:ycm_preview_to_completeopt=0
-" let g:ycm_autoclose_preview_window_after_completion=1
-" let g:ycm_confirm_extra_conf=0
-" nnoremap <leader>j :YcmCompleter GoToDefinition<CR>
+let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
+set completeopt-=preview
+let g:ycm_preview_to_completeopt=0
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_confirm_extra_conf=0
+nnoremap <leader>j :YcmCompleter GoToDefinition<CR>
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<c-j>"
@@ -212,7 +212,6 @@ let g:ycm_semantic_triggers.tex = [
     \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
     \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
     \ ]
-
 " }}}
 
 " other functions {{{ 

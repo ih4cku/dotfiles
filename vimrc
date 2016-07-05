@@ -46,7 +46,6 @@ Plugin 'BufOnly.vim'
 
 " colorscheme
 Plugin 'freeo/vim-kalisi'
-Plugin 'sickill/vim-monokai'
 
 call vundle#end()
 filetype on
@@ -71,7 +70,6 @@ set lazyredraw
 set nowrap
 highlight ColorColumn ctermbg=gray
 set colorcolumn=81
-colorscheme kalisi
 " }}}
 
 " syntax, highlighting and spelling {{{
@@ -83,13 +81,15 @@ set background=dark
 " }}}
 
 " gui and mouse {{{
-if has('win32')
-    if has('gui_running')
-        set guifont=Consolas:h10
-        set bg=light
-    else
-        set bg=dark
-    endif
+if has('win32') && has('gui_running')
+    set guifont=Consolas:h10
+endif
+if has('win32') && !has('gui_running')
+    colorscheme default
+    set bg=dark
+else
+    set bg=light
+    colorscheme kalisi
 endif
 set mouse=a
 set guioptions-=T
@@ -223,7 +223,6 @@ augroup END " }
 
 " hard text wrap in Tex
 let g:tex_flavor='latex'
-autocmd BufRead,BufNewFile *.tex set filetype=tex
 autocmd FileType tex :setlocal formatoptions+=mB
 
 function! ChangeToThesis()

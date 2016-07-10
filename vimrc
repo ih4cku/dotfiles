@@ -182,10 +182,10 @@ nnoremap <F5> :SCCompileRun<CR>
 
 " YCM
 let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
-" set completeopt-=preview
-" let g:ycm_preview_to_completeopt=0
-" let g:ycm_autoclose_preview_window_after_completion=1
-" let g:ycm_confirm_extra_conf=0
+set completeopt-=preview
+let g:ycm_preview_to_completeopt=0
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_confirm_extra_conf=0
 nnoremap <leader>j :YcmCompleter GoToDefinition<CR>
 
 " UltiSnips

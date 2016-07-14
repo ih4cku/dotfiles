@@ -55,3 +55,7 @@ echo "Installing ag"
 echo "============="
 apt-get install -y silversearcher-ag
 
+# alias
+echo 'alias cls='printf "\033c"'' >> ~/.bashrc
+echo 'alias tmux='tmux -2'' >> ~/.bashrc
+echo 'alias ssh='ssh -Y'' >> ~/.bashrc

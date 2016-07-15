@@ -154,6 +154,10 @@ nnoremap <leader>n :bn!<CR>
 nnoremap <leader>p :bp!<CR>
 nnoremap <leader>d :Bdelete<CR>
 
+" movement in insert mode
+inoremap <c-l> <right>
+inoremap <c-h> <left>
+
 " Ag
 nnoremap <leader>a :Ag!
 " }}}
@@ -225,9 +229,10 @@ augroup END " }
 let g:tex_flavor='latex'
 autocmd FileType tex :setlocal formatoptions+=mB
 
-function! ChangeToThesis()
-    :cd E:/research/thesis/phd
-    echo "now in: " . getcwd()
-endfunction
-nnoremap <leader>c :call ChangeToThesis()<CR>
+" set prototxt filetype
+autocmd BufRead,BufNewFile *.prototxt set ft=conf
+
+" dollar in math
+autocmd FileType tex inoremap $ $$<left>
+
 " }}}

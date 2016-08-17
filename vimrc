@@ -16,6 +16,11 @@ Plugin 'scrooloose/nerdtree.git'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
 
+" shell integration
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/vimshell.vim'
+Plugin 'tpope/vim-dispatch'
+
 " tags
 Plugin 'majutsushi/tagbar'
 
@@ -156,10 +161,10 @@ nnoremap <leader>d :Bdelete<CR>
 
 " movement in insert mode
 inoremap <c-l> <right>
-inoremap <c-h> <left>
+inoremap <c-k> <left>
 
 " Ag
-nnoremap <leader>a :Ag!
+nnoremap <leader>a :Ag! 
 " }}}
 
 " plugin settings {{{
@@ -184,6 +189,9 @@ nnoremap <F3> :NERDTreeToggle<CR>
 nnoremap <F7> :SCCompile<CR>
 nnoremap <F5> :SCCompileRun<CR>
 
+" open VimShell, `t` stands for terminal
+nnoremap <leader>t :VimShell<CR>
+
 " YCM
 let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
 set completeopt-=preview
@@ -198,7 +206,9 @@ let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " vimtex
+nnoremap <localleader>lt :VimtexTocToggle<CR>
 nnoremap <localleader>lb :VimtexCompile<CR>:VimtexView<CR>
+let g:vimtex_quickfix_ignore_all_warnings=1
 let g:vimtex_latexmk_continuous=0
 let g:vimtex_latexmk_options='-xelatex -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
 if has("win32")
@@ -232,7 +242,7 @@ autocmd FileType tex :setlocal formatoptions+=mB
 " set prototxt filetype
 autocmd BufRead,BufNewFile *.prototxt set ft=conf
 
-" dollar in math
+" latex dollor completion
 autocmd FileType tex inoremap $ $$<left>
 
 " }}}

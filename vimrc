@@ -16,11 +16,6 @@ Plugin 'scrooloose/nerdtree.git'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
 
-" shell integration
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/vimshell.vim'
-Plugin 'tpope/vim-dispatch'
-
 " tags
 Plugin 'majutsushi/tagbar'
 
@@ -68,7 +63,7 @@ set smartcase
 set scrolloff=3
 set number
 set relativenumber
-set linebreak
+" set linebreak
 set foldenable
 set foldmethod=marker
 set lazyredraw
@@ -161,7 +156,7 @@ nnoremap <leader>d :Bdelete<CR>
 
 " movement in insert mode
 inoremap <c-l> <right>
-inoremap <c-k> <left>
+inoremap <c-h> <left>
 
 " Ag
 nnoremap <leader>a :Ag! 
@@ -172,6 +167,10 @@ nnoremap <leader>a :Ag!
 " airline
 set laststatus=2
 set t_Co=256
+
+" ctrlp ignore
+" let g:ctrlp_custom_ignore = {
+" }
 
 " vim-multiple-cursors
 let g:multi_cursor_exit_from_insert_mode=0
@@ -189,9 +188,6 @@ nnoremap <F3> :NERDTreeToggle<CR>
 nnoremap <F7> :SCCompile<CR>
 nnoremap <F5> :SCCompileRun<CR>
 
-" open VimShell, `t` stands for terminal
-nnoremap <leader>t :VimShell<CR>
-
 " YCM
 let g:ycm_global_ycm_extra_conf='~/.ycm_extra_conf.py'
 set completeopt-=preview
@@ -206,10 +202,12 @@ let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " vimtex
-nnoremap <localleader>lt :VimtexTocToggle<CR>
-nnoremap <localleader>lb :VimtexCompile<CR>:VimtexView<CR>
-let g:vimtex_quickfix_ignore_all_warnings=1
-let g:vimtex_latexmk_continuous=0
+nnoremap <leader>b :VimtexCompile<CR>:VimtexView<CR>
+nnoremap <leader>v :VimtexView<CR>
+
+let g:vimtex_latexmk_continuous=1
+let g:vimtex_quickfix_mode=2
+let g:vimtex_quickfix_open_on_warning=0
 let g:vimtex_latexmk_options='-xelatex -verbose -file-line-error -synctex=1 -interaction=nonstopmode'
 if has("win32")
     let g:vimtex_view_general_viewer='SumatraPDF'
@@ -220,6 +218,13 @@ elseif has("unix")
     let g:vimtex_view_general_options='--unique @pdf\#src:@tex:@line:@col'
     let g:vimtex_view_general_options_latexmk='--unique'
 endif
+
+" let g:vimtex_view_general_callback = 'ViewerCallback'
+" function! ViewerCallback(status) dict
+"     if a:status
+"         VimtexView
+"     endif
+" endfunction
 
 " }}}
 
@@ -237,12 +242,12 @@ augroup END " }
 
 " hard text wrap in Tex
 let g:tex_flavor='latex'
-autocmd FileType tex :setlocal formatoptions+=mB
+autocmd FileType tex :setlocal formatoptions+=mMB
 
 " set prototxt filetype
 autocmd BufRead,BufNewFile *.prototxt set ft=conf
 
-" latex dollor completion
+" dollar in math
 autocmd FileType tex inoremap $ $$<left>
 
 " }}}
